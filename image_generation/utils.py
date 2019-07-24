@@ -73,6 +73,25 @@ def set_layer(obj, layer_idx):
   for i in range(len(obj.layers)):
     obj.layers[i] = (i == layer_idx)
 
+def add_object_to_3d(object_dir, name, scale, loc, theta=0):
+  count = 0
+  for obj in bpy.data.objects:
+    if obj.name.startswith(name):
+      count += 1
+
+  filename = os.path.join(object_dir, '%s.blend' % name, 'Object', name)
+  bpy.ops.wm.append(filename=filename)
+
+  # Give it a new name to avoid conflicts
+  new_name = '%s_%d' % (name, count)
+  bpy.data.objects[name].name = new_name
+
+  # Set the new object as active, then rotate, scale, and translate it
+  bpy.context.scene.objects.active = bpy.data.objects[new_name]
+  bpy.context.object.rotation_euler[2] = theta
+  bpy.ops.transform.resize(value=(scale, scale, scale))
+  bpy.ops.transform.translate(value=loc)
+
 
 def add_object(object_dir, name, scale, loc, theta=0):
   """
