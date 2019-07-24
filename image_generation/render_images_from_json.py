@@ -341,7 +341,7 @@ def get_material(object_representation, material_mapping):
 
 def add_objects_from_json(scene_struct, args, camera):
   """
-  Read json created by our unity simulation tool and read object properties
+  Read json created by our unity simulation tool and read object properties to add objects
   """
 
   # Load the property file
